@@ -1,0 +1,38 @@
+//Below is the code snippet to illustrate the use of DataGridView. Have a button and
+//datagridview control on the form. On click of the button below code is called
+private void GetGrid_Click(object sender, EventArgs e)
+{
+DB_Connect();
+comm = new OracleCommand();
+comm.CommandText = "select * from instructor";
+comm.CommandType = CommandType.Text;
+ds = new DataSet();
+da = new OracleDataAdapter(comm.CommandText, conn);
+da.Fill(ds, "Tbl_instructor");
+dt = ds.Tables["Tbl_instructor"];
+int t = dt.Rows.Count;
+MessageBox.Show(t.ToString());
+dr = dt.Rows[i];
+dataGridView1.DataSource = ds;
+dataGridView1.DataMember = "instructor";
+conn.Close();
+}
+//Following is the code snippet to populate a combo box from database.
+//Have a combobox on the form and call below code on form load.
+private void Form1_Load(object sender, EventArgs e)
+{
+DB_Connect();
+comm = new OracleCommand();
+comm.CommandText = "select deptname from instructor";
+comm.CommandType = CommandType.Text;
+ds = new DataSet();
+da = new OracleDataAdapter(comm.CommandText, conn);
+da.Fill(ds, "Tbl_instructor");
+dt = ds.Tables["Tbl_instructor"];
+int t = dt.Rows.Count;
+MessageBox.Show(t.ToString());
+comboBox1.DataSource = dt.DefaultView;
+comboBox1.DisplayMember = "deptname";
+conn.Close();
+}
+}
